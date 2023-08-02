@@ -18,7 +18,7 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Path to nvm') {
             steps {
                 script {
                     //Активируем нужную версию node.js
@@ -30,15 +30,32 @@ pipeline {
                         sh 'npm --version'
                     }
                 }
-                echo "building states"
-                sh 'ls -a'
-                sh 'sudo chown -R $USER:$(id -gn $USER) /home/ubuntu/.nvm/versions/node/v18.17.0'
-                sh "npm install -g yarn"
-                sh 'cd /home/ubuntu/project/elochka/frontend'
-                sh 'pwd'
-                sh 'ls -a'
-                sh "yarn start"
                 // Далее можете продолжить со сборкой в Build стадии
+            }
+        }
+
+        stage('Install and Build') {
+            steps {
+                echo "Install nvm and use Node.js"v
+                sh 'sudo chown -R $USER:$(id -gn $USER) /home/ubuntu/.nvm/versions/node/v18.17.0'
+                // sh "npm install -g yarn"
+                dir('/home/ubuntu/project/build_project/hosting_service') {
+                    echo " Working din /home/ubuntu/project/build_project/hosting_service "
+                    sh 'pwd'
+                    sh 'ls -a'
+                    sh 'yarn install'
+                    sh 'yarn build'
+                }
+            }
+        }
+
+        stage('Serve') {
+            steps {
+                echo "Install and run serve"
+                sh "yarn global add serve"
+                dir('/home/ubuntu/project/build_project/hosting_service/build') {
+                    sh 'serve -s .'
+                }
             }
         }
     }
