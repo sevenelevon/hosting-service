@@ -37,6 +37,7 @@ pipeline {
                 sh 'cd /home/ubuntu/project/elochka/frontend'
                 sh 'pwd'
                 sh 'ls -a'
+                sh "yarn install"
                 sh "yarn build"
                 // Далее можете продолжить со сборкой в Build стадии
             }
