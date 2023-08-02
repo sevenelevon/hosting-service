@@ -39,6 +39,7 @@ pipeline {
                 sh "yarn install"
                 sh "yarn build"
                 sh "yarn global add serve"
+                sh "sudo snap install serve"
                 sh "serve -s build"
                 
                 // You can continue with the build
