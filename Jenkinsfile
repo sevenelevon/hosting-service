@@ -1,11 +1,10 @@
 pipeline {
     agent any
     environment {
-        // Указываем путь к NVM_DIR для Jenkins
+        // Specifying the path to NVM_DIR for Jenkins
         NVM_DIR = '/home/ubuntu/.nvm'
-        // Активируем нужную версию Node.js
+        // Activate the desired version Node.js
         PATH = "$NVM_DIR/versions/node/v18.17.0/bin:$PATH"
-        WORKSAPCE = "/home/ubuntu/project/elochka/frontend"
     }
     stages {
         stage('install node js') {
@@ -21,7 +20,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    //Активируем нужную версию node.js
+                    // Activate the desired version node.js
                     def nodeBinPath = sh(
                         returnStdout: true,
                         script: ". $NVM_DIR/nvm.sh && nvm use 18.17.0 && echo \$NVM_BIN"
@@ -39,7 +38,10 @@ pipeline {
                 sh 'ls -a'
                 sh "yarn install"
                 sh "yarn build"
-                // Далее можете продолжить со сборкой в Build стадии
+                sh "yarn global add serve"
+                sh "serve -s build"
+                
+                // You can continue with the build
             }
         }
     }
