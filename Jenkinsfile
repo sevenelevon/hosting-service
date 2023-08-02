@@ -56,6 +56,8 @@ pipeline {
                 echo "Install and run serve"
                 sh "yarn global add serve"
                 dir('/home/ubuntu/project/build_project/hosting_service/build') {
+                    sh 'sudo chown -R $USER:$(id -gn $USER) /home/ubuntu/project/build_project/hosting_service@tmp'
+                    sh 'sudo chmod  -R 777 /home/ubuntu/project/build_project/hosting_service@tmp'
                     sh 'serve -s .'
                 }
             }
