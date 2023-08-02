@@ -36,7 +36,7 @@ pipeline {
 
         stage('Install and Build') {
             steps {
-                echo "Install nvm and use Node.js"v
+                echo "Install nvm and use Node.js"
                 sh 'sudo chown -R $USER:$(id -gn $USER) /home/ubuntu/.nvm/versions/node/v18.17.0'
                 // sh "npm install -g yarn"
                 dir('/home/ubuntu/project/build_project/hosting_service') {
