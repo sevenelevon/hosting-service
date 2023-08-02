@@ -1,10 +1,11 @@
 pipeline {
     agent any
     environment {
-        // Specifying the path to NVM_DIR for Jenkins
+        // Указываем путь к NVM_DIR для Jenkins
         NVM_DIR = '/home/ubuntu/.nvm'
-        // Activate the desired version Node.js
+        // Активируем нужную версию Node.js
         PATH = "$NVM_DIR/versions/node/v18.17.0/bin:$PATH"
+        WORKSAPCE = "/home/ubuntu/project/elochka/frontend"
     }
     stages {
         stage('install node js') {
@@ -20,7 +21,7 @@ pipeline {
         stage('Path to nvm') {
             steps {
                 script {
-                    // Activate the desired version node.js
+                    //Активируем нужную версию node.js
                     def nodeBinPath = sh(
                         returnStdout: true,
                         script: ". $NVM_DIR/nvm.sh && nvm use 18.17.0 && echo \$NVM_BIN"
@@ -37,12 +38,24 @@ pipeline {
             steps {
                 echo "Install nvm and use Node.js"v
                 sh 'sudo chown -R $USER:$(id -gn $USER) /home/ubuntu/.nvm/versions/node/v18.17.0'
-                sh "npm install -g yarn"
-                sh 'cd /home/ubuntu/project/elochka/frontend'
-                sh 'pwd'
-                sh 'ls -a'
-                sh "yarn start"
-                // Далее можете продолжить со сборкой в Build стадии
+                // sh "npm install -g yarn"
+                dir('/home/ubuntu/project/build_project/hosting_service') {
+                    echo " Working din /home/ubuntu/project/build_project/hosting_service "
+                    sh 'pwd'
+                    sh 'ls -a'
+                    sh 'yarn install'
+                    sh 'yarn build'
+                }
+            }
+        }
+
+        stage('Serve') {
+            steps {
+                echo "Install and run serve"
+                sh "yarn global add serve"
+                dir('/home/ubuntu/project/build_project/hosting_service/build') {
+                    sh 'serve -s .'
+                }
             }
         }
     }
