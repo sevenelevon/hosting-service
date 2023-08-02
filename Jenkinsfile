@@ -24,7 +24,7 @@ pipeline {
                     //Активируем нужную версию node.js
                     def nodeBinPath = sh(
                         returnStdout: true,
-                        script: ". $NVM_DIR/nvm.sh && nvm use 18.17.0" // && echo \$NVM_BIN
+                        script: ". $NVM_DIR/nvm.sh && nvm use 18.17.0 && echo \$NVM_BIN"
                     ).trim()
                         withEnv(["PATH+NODE=${nodeBinPath}:$PATH"]) {
                             sh 'npm --version'
@@ -42,6 +42,7 @@ pipeline {
                 dir('/home/ubuntu/project/build_project/hosting_service') {
                     echo "Working dir /home/ubuntu/project/build_project/hosting_service"
                     sh 'sudo chown -R $USER:$(id -gn $USER) /home/ubuntu/project/build_project'
+                    sh 'sudo chmod  -R 777 /home/ubuntu/project/build_project'
                     sh 'pwd'
                     sh 'ls -a'
                     sh 'yarn install'
