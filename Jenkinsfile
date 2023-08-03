@@ -40,6 +40,7 @@ pipeline {
                 sh 'yarn install'
                 sh 'yarn build'
                 sh 'ls -l'
+                sh 'mkdir -p home/ubuntu/project/build_project/hosting_service/'
                 sh 'mv build home/ubuntu/project/build_project/hosting_service/'
                 dir('/home/ubuntu/project/build_project/hosting_service') {
                     echo "Working dir /home/ubuntu/project/build_project/hosting_service"
