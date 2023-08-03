@@ -43,7 +43,7 @@ pipeline {
                 sh 'pwd'
                 // mv folder in service
                 sh 'mkdir -p home/ubuntu/project/build_project/hosting-service/'
-                sh 'mv /home/ubuntu/jenkins/workspace/hosting-service/build/ /home/ubuntu/project/build_project/hosting-service'
+                sh 'mv /home/ubuntu/jenkins/workspace/hosting-service/build/* /home/ubuntu/project/build_project/hosting-service/build/'
                 dir('/home/ubuntu/project/build_project/hosting_service') {
                     echo "Working dir /home/ubuntu/project/build_project/hosting_service"
                     sh 'pwd'
