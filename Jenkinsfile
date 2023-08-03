@@ -39,7 +39,8 @@ pipeline {
                 sh "npm install -g yarn"
                 sh 'yarn install'
                 sh 'yarn build'
-                sh 'mv build home/ubuntu/project/build_project/hosting_service/'
+                // sh 'mv build home/ubuntu/project/build_project/hosting_service/'
+                sh 'ls -l'
                 dir('/home/ubuntu/project/build_project/hosting_service') {
                     echo "Working dir /home/ubuntu/project/build_project/hosting_service"
                     sh 'pwd'
