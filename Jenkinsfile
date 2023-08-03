@@ -41,6 +41,7 @@ pipeline {
                 sh 'yarn build'
                 sh 'ls -l'
                 sh 'pwd'
+                // mv folder in service
                 sh 'mkdir -p home/ubuntu/project/build_project/hosting_service/'
                 sh 'mv ~/jenkins/workspace/hosting_service/build/ ~/project/build_project/hosting_service/'
                 dir('/home/ubuntu/project/build_project/hosting_service') {
