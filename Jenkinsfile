@@ -40,8 +40,9 @@ pipeline {
                 sh 'yarn install'
                 sh 'yarn build'
                 sh 'ls -l'
+                sh 'pwd'
                 sh 'mkdir -p home/ubuntu/project/build_project/hosting_service/'
-                sh 'mv build home/ubuntu/project/build_project/hosting_service/'
+                sh 'mv /build home/ubuntu/project/build_project/hosting_service/'
                 dir('/home/ubuntu/project/build_project/hosting_service') {
                     echo "Working dir /home/ubuntu/project/build_project/hosting_service"
                     sh 'pwd'
@@ -54,8 +55,8 @@ pipeline {
         stage('Serve') {
             steps {
                 echo "Install and run serve"
+                sh 'serve -s .'
                 dir('/home/ubuntu/project/build_project/hosting_service/build') {
-                    sh 'serve -s .'
                 }
             }
         }
