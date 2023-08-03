@@ -42,7 +42,7 @@ pipeline {
                 sh 'ls -l'
                 sh 'pwd'
                 sh 'mkdir -p home/ubuntu/project/build_project/hosting_service/'
-                sh 'mv /build home/ubuntu/project/build_project/hosting_service/'
+                sh 'mv ~/jenkins/workspace/hosting_service/build/ ~/project/build_project/hosting_service/'
                 dir('/home/ubuntu/project/build_project/hosting_service') {
                     echo "Working dir /home/ubuntu/project/build_project/hosting_service"
                     sh 'pwd'
