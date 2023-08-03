@@ -56,8 +56,8 @@ pipeline {
         stage('Serve') {
             steps {
                 echo "Install and run serve"
-                sh 'serve -s .'
-                dir('/home/ubuntu/project/build_project/hosting_service/build') {
+                dir('/home/ubuntu/project/build_project/hosting-service/build/') {
+                    sh 'serve -s .'
                 }
             }
         }
