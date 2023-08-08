@@ -53,18 +53,27 @@ pipeline {
             }
         }
 
-        stage('Serve') {
+        stage('Run Serve') {
             steps {
-                echo "Install and run serve"
-                sh 'whoami'
-                // dir('/home/ubuntu/project/build_project/hosting-service/build/') {
-                //     sh 'serve -s .'
-                // }
-                dir('/home/ubuntu/jenkins/workspace/hosting-service/build') {
-                    sh 'pwd'
-                    sh 'yarn build'
-                    sh 'serve -s .'
+                script {
+                    script {
+                    def pidFile = '/home/ubuntu/jenkins/workspace'
+
+                    if (fileExists(pidFile)) {
+                        def prevPid = readFile(pidFile).trim()
+                        sh "kill $prevPid"
+                    }
+
+                    sh "serve -s build &"
+                    def servePid = sh(script: "echo \$!", returnStdout: true).trim()
+                    writeFile file: pidFile, text: servePid
                 }
+                }                
+                // dir('/home/ubuntu/jenkins/workspace/hosting-service/build') {
+                //     sh 'pwd'
+                //     sh 'yarn build'
+                //     sh 'serve -s . &'
+                // }
             }
         }
     }
