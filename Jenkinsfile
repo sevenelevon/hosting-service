@@ -60,10 +60,10 @@ pipeline {
                 // dir('/home/ubuntu/project/build_project/hosting-service/build/') {
                 //     sh 'serve -s .'
                 // }
-                dir('/home/ubuntu/jenkins/workspace/hosting-service/') {
+                dir('/home/ubuntu/jenkins/workspace/hosting-service/build') {
                     sh 'pwd'
                     sh 'yarn build'
-                    sh 'serve -s build'
+                    sh 'serve -s .'
                 }
             }
         }
