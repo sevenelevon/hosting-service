@@ -55,25 +55,21 @@ pipeline {
 
         stage('Run Serve') {
             steps {
-                script {
+                dir('/home/ubuntu/jenkins/workspace/hosting-service/') {
                     script {
-                    def pidFile = '/home/ubuntu/jenkins/workspace'
+                        sh 'yarn build'
+                        def pidFile = '/home/ubuntu/jenkins/workspace'
 
-                    if (fileExists(pidFile)) {
-                        def prevPid = readFile(pidFile).trim()
-                        sh "kill $prevPid"
+                        if (fileExists(pidFile)) {
+                            def prevPid = readFile(pidFile).trim()
+                            sh "kill $prevPid"
+                        }
+
+                        sh "serve -s build &"
+                        def servePid = sh(script: "echo \$!", returnStdout: true).trim()
+                        writeFile file: pidFile, text: servePid
                     }
-
-                    sh "serve -s build &"
-                    def servePid = sh(script: "echo \$!", returnStdout: true).trim()
-                    writeFile file: pidFile, text: servePid
                 }
-                }                
-                // dir('/home/ubuntu/jenkins/workspace/hosting-service/build') {
-                //     sh 'pwd'
-                //     sh 'yarn build'
-                //     sh 'serve -s . &'
-                // }
             }
         }
     }
