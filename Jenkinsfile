@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        node {
-            label 'мастер'
-            customWorkspace '/home/jenkins/workspace/hosting-service'
-        }
-    }
+    agent any
     environment {
         // Указываем путь к NVM_DIR для Jenkins
         NVM_DIR = '/home/ubuntu/.nvm'
