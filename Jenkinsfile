@@ -1,6 +1,7 @@
 pipeline {
     agent {
         node {
+            label 'workstat'
             customWorkspace '/home/jenkins/workspace/hosting-service'
         }
     }
